@@ -1,5 +1,6 @@
 'use strict';
 const process = require('../../process');
+const fs = require('fs');
 
 module.exports = function(options, text) {
 
@@ -22,9 +23,12 @@ module.exports = function(options, text) {
         return acc;
     }, {});
 
-    console.log(Object.keys(probs).map((el) => { return {key: el, prob: probs[el]}}).sort((a, b) => {
+
+    let printMe = Object.keys(probs).map((el) => { return {key: el, prob: probs[el]}}).sort((a, b) => {
         return a.prob > b.prob ? -1 : a.prob < b.prob ? 1 : 0;
-    }));
+    });
+    console.log(JSON.stringify(printMe, null, 4));
+    fs.writeFile('./output.json', JSON.stringify(printMe, null, 4))
 }
 
 
